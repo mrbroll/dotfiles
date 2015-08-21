@@ -27,6 +27,9 @@ ANDROID_HOME=/Users/mrbroll/android-sdk
 # android tools
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 
+# local executables
+export PATH=$HOME/bin:$PATH
+
 # node
 export NODE_ENV=dev
 

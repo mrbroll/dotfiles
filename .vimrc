@@ -4,14 +4,12 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-"I don't need swap files
+"swapfiles!? we don't need no stinking swapfiles!
 set noswapfile
 set nobackup
 
-" let vundle manage itself
-Plugin 'gmarik/Vundle.vim'
-
 " plugins
+Plugin 'gmarik/Vundle.vim' " let vundle manage itself
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'flazz/vim-colorschemes'
@@ -40,12 +38,14 @@ map ,d :NERDTreeToggle<CR>
 "general startup commands
 syntax on
 colorscheme candy
+filetype plugin indent on
 set tabstop=4
 set softtabstop=0
 set expandtab
 set shiftwidth=4
 set smarttab
 set number
+set expandtab
 
 let g:syntastic_java_javac_classpath = "/users/mrbroll/.gradle/caches/modules-*/files-*/**/*.jar"
 let g:syntastic_scss_checkers=['']
