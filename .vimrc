@@ -22,6 +22,7 @@ Plugin 'johnsyweb/vim-makeshift'
 Plugin 'embear/vim-localvimrc'
 Plugin 'mxw/vim-jsx'
 Plugin 'fatih/vim-go'
+Plugin 'ekalinin/Dockerfile.vim'
 
 call vundle#end()
 filetype plugin indent on
