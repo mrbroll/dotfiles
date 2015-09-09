@@ -22,10 +22,12 @@ source $ZSH/oh-my-zsh.sh
 # go environment
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications:/Users/mrbroll/bin:/usr/local/go/bin:/opt/X11/bin:$PATH
-ANDROID_HOME=/Users/mrbroll/android-sdk
+export PATH=/usr/local/sbin:$PATH
+# export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications:/Users/mrbroll/bin:/usr/local/go/bin:/opt/X11/bin:$PATH
+export ANDROID_HOME=/Users/mrbroll/android-sdk
 # android tools
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export PATH=$HOME/Work/operations/bin:$PATH
 
 # local executables
 export PATH=$HOME/bin:$PATH
@@ -52,3 +54,16 @@ source /usr/local/bin/virtualenvwrapper.sh
 alias chrome="open /Applications/Google\ Chrome.app"
 alias spot="open /Applications/Spotify.app"
 alias node="node --harmony"
+alias sql="sqlite3 -column -cmd '.headers on'"
+alias pp="fpp"
+
+bindkey -v
+export KEYTIMEOUT=1
+
+# for wifast-base
+
+# Common wifast aliases
+alias gitgraph='git log --graph --pretty=oneline --abbrev-commit'
+
+# Enable bash completion of ./run
+# [ -x /Users/mrbroll/Work/wifast-base/run ] && eval "`/Users/mrbroll/Work/wifast-base/run completion`"
