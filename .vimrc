@@ -83,5 +83,9 @@ let g:syntastic_scss_checkers=['']
 let g:syntastic_html_checkers=['']
 let g:syntastic_python_checkers=['flake8']
 
+"local vimrc
+let g:localvimrc_ask=0
+
 "ctags config
 "set tags=gcwd()/tags
+
