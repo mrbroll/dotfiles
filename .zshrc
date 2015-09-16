@@ -60,10 +60,5 @@ alias pp="fpp"
 bindkey -v
 export KEYTIMEOUT=1
 
-# for wifast-base
-
 # Common wifast aliases
 alias gitgraph='git log --graph --pretty=oneline --abbrev-commit'
-
-# Enable bash completion of ./run
-# [ -x /Users/mrbroll/Work/wifast-base/run ] && eval "`/Users/mrbroll/Work/wifast-base/run completion`"
