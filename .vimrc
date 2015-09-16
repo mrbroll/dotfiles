@@ -42,7 +42,7 @@ map ,t :NERDTree
 
 "general startup commands
 syntax on
-colorscheme monokai
+"colorscheme monokai
 filetype plugin indent on
 set tabstop=4
 set softtabstop=4
