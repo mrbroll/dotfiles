@@ -43,14 +43,6 @@ export DOCKER_TLS_VERIFY=1
 export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH=/Users/mrbroll/.boot2docker/certs/boot2docker-vm
 
-# For virtualenv and virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/projects
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-export DISABLE_AUTO_TITLE='true'
-source /usr/local/bin/virtualenvwrapper.sh
-
 alias chrome="open /Applications/Google\ Chrome.app"
 alias spot="open /Applications/Spotify.app"
 alias node="node --harmony"
