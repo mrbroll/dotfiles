@@ -32,6 +32,8 @@ filetype plugin indent on
 " open NERDTree if no files specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" ignore these files
+let NERDTreeIgnore = ['\.pyc$']
 
 "emmet
 let g:user_emmet_settings = { 'liquid': { 'extends': 'html', }, }
@@ -42,7 +44,7 @@ map ,t :NERDTree
 
 "general startup commands
 syntax on
-"colorscheme monokai
+"colorscheme monokai "just use the terminal's colorscheme instead
 filetype plugin indent on
 set tabstop=4
 set softtabstop=4
@@ -53,6 +55,7 @@ set autoindent
 set cindent
 set expandtab
 set clipboard=unnamed
+set colorcolumn=99
 
 "get relative line numbers so I don't have to count that shit anymore
 "also show absolute line number of the line the cursor is on

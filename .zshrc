@@ -30,7 +30,8 @@ export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 export PATH=$HOME/Work/operations/bin:$PATH
 
 # local executables
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/Applications:$PATH
+
 
 # node
 export NODE_ENV=dev
@@ -48,6 +49,7 @@ alias spot="open /Applications/Spotify.app"
 alias node="node --harmony"
 alias sql="sqlite3 -column -cmd '.headers on'"
 alias pp="fpp"
+alias wifi="wifi.sh"
 
 bindkey -v
 export KEYTIMEOUT=1
