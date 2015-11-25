@@ -25,6 +25,8 @@ Plugin 'nvie/vim-flake8'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'Matt-Deacalion/vim-systemd-syntax'
+Plugin 'moll/vim-node'
 
 call vundle#end()
 filetype plugin indent on
@@ -44,7 +46,6 @@ map ,t :NERDTree
 
 "general startup commands
 syntax on
-"colorscheme monokai "just use the terminal's colorscheme instead
 filetype plugin indent on
 set tabstop=4
 set softtabstop=4
@@ -55,6 +56,7 @@ set autoindent
 set cindent
 set expandtab
 set clipboard=unnamed
+"mark column 99 for line length reference
 set colorcolumn=99
 
 "get relative line numbers so I don't have to count that shit anymore
@@ -86,9 +88,8 @@ let g:syntastic_scss_checkers=['']
 let g:syntastic_html_checkers=['']
 let g:syntastic_python_checkers=['flake8']
 
-"local vimrc
+"use a .lvimrc without asking
 let g:localvimrc_ask=0
 
 "ctags config
 "set tags=gcwd()/tags
-

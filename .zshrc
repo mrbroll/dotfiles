@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 # Homebrew
-export HOMEBREW_GITHUB_API_TOKEN=c7923dfa0494d5fef0b9f64edee89637bb590291
+export HOMEBREW_GITHUB_API_TOKEN=1787b61c1b9f5b7a3dcb51495d222516e6df35fd
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -28,10 +28,8 @@ export ANDROID_HOME=/Users/mrbroll/android-sdk
 # android tools
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 export PATH=$HOME/Work/operations/bin:$PATH
-
-# local executables
+# home dir executables
 export PATH=$HOME/bin:$HOME/Applications:$PATH
-
 
 # node
 export NODE_ENV=dev
@@ -39,10 +37,8 @@ export NODE_ENV=dev
 # text editor
 export EDITOR=vim
 
-# Docker
-export DOCKER_TLS_VERIFY=1
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=/Users/mrbroll/.boot2docker/certs/boot2docker-vm
+# Fleet
+alias fleetctl="fleetctl -strict-host-key-checking=false"
 
 alias chrome="open /Applications/Google\ Chrome.app"
 alias spot="open /Applications/Spotify.app"
