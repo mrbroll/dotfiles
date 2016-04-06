@@ -38,10 +38,11 @@ export EDITOR=vim
 alias fleetctl="fleetctl -strict-host-key-checking=false"
 
 alias chrome="open /Applications/Google\ Chrome.app"
-alias spot="open /Applications/Spotify.app"
+alias es="elasticsearch"
 alias node="node --harmony"
-alias sql="sqlite3 -column -cmd '.headers on'"
 alias pp="fpp"
+alias spot="open /Applications/Spotify.app"
+alias sql="sqlite3 -column -cmd '.headers on'"
 alias wifi="wifi.sh"
 
 bindkey -v
@@ -53,3 +54,6 @@ alias gitgraph='git log --graph --pretty=oneline --abbrev-commit'
 # file and proc limits
 ulimit -n 65536
 ulimit -u 2048
+
+export NVM_DIR="/Users/mrbroll/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -86,7 +86,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_java_javac_classpath = "/users/mrbroll/.gradle/caches/modules-*/files-*/**/*.jar"
 let g:syntastic_scss_checkers=['']
 let g:syntastic_html_checkers=['']
-let g:syntastic_python_checkers=['flake8']
+"let g:syntastic_python_checkers=['flake8']
 
 "use a .lvimrc without asking
 let g:localvimrc_ask=0
