@@ -18,15 +18,8 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 # go environment
 export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$PATH
-export PATH=/usr/local/sbin:$PATH
-# export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications:/Users/mrbroll/bin:/usr/local/go/bin:/opt/X11/bin:$PATH
-export ANDROID_HOME=/Users/mrbroll/android-sdk
-# android tools
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-export PATH=$HOME/Work/operations/bin:$PATH
-# home dir executables
-export PATH=$HOME/bin:$HOME/Applications:$PATH
+export GOBIN=$GOPATH/bin
+export PATH=$GOBIN:$PATH
 
 # node
 export NODE_ENV=dev
