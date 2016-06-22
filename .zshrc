@@ -30,11 +30,9 @@ export EDITOR=vim
 # Fleet
 alias fleetctl="fleetctl -strict-host-key-checking=false"
 
-alias chrome="open /Applications/Google\ Chrome.app"
 alias es="elasticsearch"
 alias node="node --harmony"
 alias pp="fpp"
-alias spot="open /Applications/Spotify.app"
 alias sql="sqlite3 -column -cmd '.headers on'"
 alias wifi="wifi.sh"
 
