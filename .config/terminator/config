@@ -1,0 +1,9 @@
+[profiles]
+    [[default]]
+        background_type = "transparent"
+        background_darkness = 0.8
+        font = Mono 9
+        foreground_color = "#ffffff"
+        show_titlebar = false
+        scrollbar_position = "disabled"
+        use_system_font = false

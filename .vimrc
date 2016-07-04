@@ -30,11 +30,15 @@ Plugin 'moll/vim-node'
 call vundle#end()
 filetype plugin indent on
 
+" colors
+colorscheme candy
+
 " open NERDTree if no files specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " ignore these files
 let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeDirArrows=0
 
 "emmet
 let g:user_emmet_settings = { 'liquid': { 'extends': 'html', }, }
@@ -44,6 +48,7 @@ map ,d :NERDTreeToggle<CR>
 map ,t :NERDTree
 
 "general startup commands
+set encoding=utf-8
 syntax on
 filetype plugin indent on
 set tabstop=4
