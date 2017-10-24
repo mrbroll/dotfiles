@@ -1,4 +1,5 @@
 set nocompatible
+set shell=zsh
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -20,12 +21,24 @@ Plugin 'johnsyweb/vim-makeshift'
 Plugin 'embear/vim-localvimrc'
 Plugin 'mxw/vim-jsx'
 Plugin 'fatih/vim-go'
+Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'Matt-Deacalion/vim-systemd-syntax'
 Plugin 'moll/vim-node'
+Plugin 'chrisbra/csv.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'mattn/webapi-vim'
+Plugin 'tyru/open-browser.vim'
+Plugin 'vim-scripts/DrawIt'
+Plugin 'hashivim/vim-hashicorp-tools'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'ensime/ensime-vim'
+Plugin 'pantsbuild/vim-pants'
+Plugin 'jparise/vim-graphql'
 
 call vundle#end()
 filetype plugin indent on
@@ -38,7 +51,6 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " ignore these files
 let NERDTreeIgnore = ['\.pyc$']
-let NERDTreeDirArrows=0
 
 "emmet
 let g:user_emmet_settings = { 'liquid': { 'extends': 'html', }, }
@@ -83,3 +95,14 @@ let g:syntastic_check_on_wq = 1
 let g:localvimrc_sandbox=0
 let g:localvimrc_ask=0
 let g:localvimrc_name=['.lvimrc']
+
+"terraform
+let g:terraform_fmt_on_save=1
+
+"youcompleteme
+let g:ycm_server_python_interpreter='/usr/local/bin/python'
+let g:ycm_autoclose_preview_window_after_insertion=1
+
+"ensime
+autocmd BufWritePost *.scala silent :EnTypeCheck
+nnoremap <localleader>t :EnType<CR>
