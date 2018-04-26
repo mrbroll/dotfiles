@@ -25,7 +25,9 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$GOBIN:$PATH
 
-export PATH=$PATH:$HOME/bin
+export PATH=$HOME/bin:$PATH
+
+export PATH=$PATH:$HOME/.gem/ruby/2.4.0/bin
 
 # node
 export NODE_ENV=dev
@@ -35,16 +37,21 @@ export EDITOR=vim
 export SYSTEMD_EDITOR=vim
 
 # ALIAS
+alias bzl="bazel"
 alias dc="docker-compose"
 alias fleetctl="fleetctl --strict-host-key-checking=false"
 alias pp="fpp"
 alias spotify="spotify --force-device-scale-factor=1.5"
 alias sql="sqlite3 -column -cmd '.headers on'"
 alias tr="transmission-remote"
+alias trcli="transmission-remote-cli"
 alias tf="terraform"
 alias g="git"
 alias copy="xclip -selection c"
 alias auth="authenticator"
+alias y="yarn"
+alias vbmanage="VBoxManage"
+alias xc="xclip"
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward
@@ -71,6 +78,9 @@ export CONSCRIPT_HOME="$HOME/.conscript"
 export CONSCRIPT_OPTS="-XX:MaxPermSize=512M -Dfile.encoding=UTF-8"
 export PATH=$CONSCRIPT_HOME/bin:$PATH
 
+#for ensime
+export BROWSER="google-chrome-stable %s"
+
 #make and cd to dir
 mkcd() {
     dir=$1
@@ -78,48 +88,14 @@ mkcd() {
     mkdir -p "$dir" && cd "$dir"
 }
 
-aws-sand() {
-    eval $(aws-env-role sand operator)
-}
-
-aws-stag() {
-    eval $(aws-env-role stag operator)
-}
-
-aws-prod() {
-    eval $(aws-env-role prod operator)
+aws-login() {
+    env=$1
+    role=$2
+    eval $(aws-env-role $env $role)
 }
 
 aws-logout() {
     unset $(env | sed -n 's/^\(AWS_[^=]*\)=.*$/\1/p')
-}
-
-mongo-zp() {
-    vpn zd down && \
-    vpn zs down && \
-    vpn zp up && \
-    mongo mongodb.prod.cntr.io/wifastportal
-}
-
-mongo-zs() {
-    vpn zd down && \
-    vpn zp down && \
-    vpn zs up && \
-    mongo mongodb.stag.cntr.io/wifastportal
-}
-
-mongo-zd() {
-    vpn zs down && \
-    vpn zp down && \
-    vpn zd up && \
-    mongo mongodb.sand.cntr.io/wifastportal
-}
-
-mongo-shadow() {
-    vpn zs down && \
-    vpn zd down && \
-    vpn zp up
-    mongo datasandbox-worker1/wifastportal
 }
 
 pants-setup() {
@@ -127,3 +103,6 @@ pants-setup() {
     touch pants.ini && \
     echo "[GLOBAL]\npants_version: $(./pants -V)" > pants.ini
 }
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/vault vault

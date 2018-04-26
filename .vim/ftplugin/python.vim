@@ -1,3 +1,8 @@
+"indentation
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
 "mark column 99 for line length reference
 set colorcolumn=99
 let g:syntastic_python_checkers=['flake8']

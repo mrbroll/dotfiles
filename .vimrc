@@ -1,6 +1,5 @@
 set nocompatible
 set shell=zsh
-filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -39,6 +38,11 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'ensime/ensime-vim'
 Plugin 'pantsbuild/vim-pants'
 Plugin 'jparise/vim-graphql'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'google/vim-maktaba'
+Plugin 'bazelbuild/vim-bazel'
+Plugin 'bazelbuild/vim-ft-bzl'
+Plugin 'google/vim-jsonnet'
 
 call vundle#end()
 filetype plugin indent on
@@ -50,7 +54,7 @@ colorscheme candy
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " ignore these files
-let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeIgnore = ['\.pyc$', 'bazel-.*']
 
 "emmet
 let g:user_emmet_settings = { 'liquid': { 'extends': 'html', }, }
@@ -106,3 +110,10 @@ let g:ycm_autoclose_preview_window_after_insertion=1
 "ensime
 autocmd BufWritePost *.scala silent :EnTypeCheck
 nnoremap <localleader>t :EnType<CR>
+let ensime_server_v2=1
+
+"scala
+let g:syntastic_mode_map = { "mode": "active", "active_filetypes": [], "passive_filetypes": ["scala"]}
+
+"jsonnet
+let g:jsonnet_fmt_on_save = 0
