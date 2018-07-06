@@ -29,6 +29,9 @@ export PATH=$HOME/bin:$PATH
 
 export PATH=$PATH:$HOME/.gem/ruby/2.4.0/bin
 
+# graalvm binaries
+export PATH=$PATH:$HOME/install/graalvm-1.0.0-rc1/bin
+
 # node
 export NODE_ENV=dev
 
@@ -43,7 +46,6 @@ alias fleetctl="fleetctl --strict-host-key-checking=false"
 alias pp="fpp"
 alias spotify="spotify --force-device-scale-factor=1.5"
 alias sql="sqlite3 -column -cmd '.headers on'"
-alias tr="transmission-remote"
 alias trcli="transmission-remote-cli"
 alias tf="terraform"
 alias g="git"
@@ -56,9 +58,6 @@ alias xc="xclip"
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 export KEYTIMEOUT=1
-
-# Common wifast aliases
-alias gitgraph='git log --graph --pretty=oneline --abbrev-commit'
 
 export NVM_DIR="/home/mrbroll/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -88,16 +87,6 @@ mkcd() {
     mkdir -p "$dir" && cd "$dir"
 }
 
-aws-login() {
-    env=$1
-    role=$2
-    eval $(aws-env-role $env $role)
-}
-
-aws-logout() {
-    unset $(env | sed -n 's/^\(AWS_[^=]*\)=.*$/\1/p')
-}
-
 pants-setup() {
     curl -L -O https://pantsbuild.github.io/setup/pants && chmod +x pants && \
     touch pants.ini && \
@@ -106,3 +95,23 @@ pants-setup() {
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/vault vault
+
+jira-changes() {
+    url="https://zenreach.atlassian.net/rest/api/2/search?jql=(status%20changed%20BY%20currentuser()%20after%20-2d)"
+    user_pass=mrbroll@zenreach.com:`pass show zenreach.atlassian.net/mrbroll@zenreach.com`
+    filter='.issues[] | {"issue": .key, "summary": .fields.summary, "updated":.fields.updated, "new_status":.fields.status.name }'
+    curl -u $user_pass -s $url | jq $filter | tee >(cat 1>&2) | copy
+}
+
+aws-logout() {
+    for v in $(env | sed -n 's/^\(AWS_[^=]*\)=.*$/\1/p')
+    do
+        unset "$v"
+    done
+}
+
+aws-login() {
+    local env=$1
+    local role=$2
+    eval $(mfa token aws | aws-env-role $env $role)
+}
