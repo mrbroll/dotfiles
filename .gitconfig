@@ -4,3 +4,4 @@
 	br = branch
 	ci = commit
 	s = status
+    l = log
