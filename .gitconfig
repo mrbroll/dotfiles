@@ -1,0 +1,6 @@
+# This is Git's per-user configuration file.
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	s = status

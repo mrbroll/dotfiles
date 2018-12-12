@@ -35,7 +35,6 @@ Plugin 'tyru/open-browser.vim'
 Plugin 'vim-scripts/DrawIt'
 Plugin 'hashivim/vim-hashicorp-tools'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'ensime/ensime-vim'
 Plugin 'pantsbuild/vim-pants'
 Plugin 'jparise/vim-graphql'
 Plugin 'vim-ruby/vim-ruby'
@@ -106,11 +105,6 @@ let g:terraform_fmt_on_save=1
 "youcompleteme
 let g:ycm_server_python_interpreter='/usr/local/bin/python'
 let g:ycm_autoclose_preview_window_after_insertion=1
-
-"ensime
-autocmd BufWritePost *.scala silent :EnTypeCheck
-nnoremap <localleader>t :EnType<CR>
-let ensime_server_v2=1
 
 "scala
 let g:syntastic_mode_map = { "mode": "active", "active_filetypes": [], "passive_filetypes": ["scala"]}
