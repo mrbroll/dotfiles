@@ -103,7 +103,7 @@ let g:localvimrc_name=['.lvimrc']
 let g:terraform_fmt_on_save=1
 
 "youcompleteme
-let g:ycm_server_python_interpreter='/usr/local/bin/python'
+let g:ycm_server_python_interpreter='/usr/bin/python3'
 let g:ycm_autoclose_preview_window_after_insertion=1
 
 "scala

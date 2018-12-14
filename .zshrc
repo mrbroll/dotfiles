@@ -39,7 +39,7 @@ alias dc="docker-compose"
 alias spotify="spotify --force-device-scale-factor=1.5"
 alias tf="terraform"
 alias g="git"
-if [[ $(type xclip 1> /dev/null) ]]; then
+if [ ! -z "$(command -v xclip)" ]; then
     alias xc="xclip"
     alias copy="xclip -selection c"
 fi
@@ -52,7 +52,7 @@ export KEYTIMEOUT=1
 #SSH
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
-if [[ $(type direnv 1> /dev/null) ]]; then
+if [ ! -z "$(command -v "direnv")" ]; then
     #direnv hook, cuz it's dope
     eval "$(direnv hook zsh)"
 fi

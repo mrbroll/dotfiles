@@ -5,3 +5,6 @@
 	ci = commit
 	s = status
     l = log
+[user]
+	name = Michael Broll
+	email = michael.broll@getcruise.com
