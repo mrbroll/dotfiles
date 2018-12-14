@@ -34,8 +34,8 @@ ${HOME}/.vim/bundle : ${HOME}/.vim
 
 ${HOME}/.vim/bundle/Vundle.vim : ${HOME}/.vim/bundle ${HOME}/.vimrc
 	test -d ${HOME}/.vim/bundle/Vundle.vim || \
-		git clone git@github.com:VundleVim/Vundle.vim ${HOME}/.vim/bundle/Vundle.vim && \
-		vim +PluginInstall +qall
+	git clone git@github.com:VundleVim/Vundle.vim ${HOME}/.vim/bundle/Vundle.vim && \
+	vim +PluginInstall +qall
 
 clean-vim :
 	rm -rf ${HOME}/.vim ${HOME}/.vimrc
