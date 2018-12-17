@@ -1,12 +1,14 @@
 DOTFILES = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 BIN = /usr/bin
 CURL = $(BIN)/curl
+OS = $(shell uname -s)
 
 all : git vim zsh
 
 clean : clean-git clean-vim clean-zsh
 
 git : ${HOME}/.gitconfig
+ssh : ${HOME}/.ssh/config
 tmux : ${HOME}/.tmux.conf
 vim : ${HOME}/.vimrc ${HOME}/.vim/ftplugin ${HOME}/.vim/bundle/Vundle.vim
 zsh : ${HOME}/.zshrc
@@ -18,6 +20,36 @@ ${HOME}/.gitconfig :
 
 clean-git :
 	rm -rf ${HOME}/.gitconfig
+
+
+#----- ssh -----#
+${HOME}/.ssh/config : ${HOME}/.ssh/id_rsa.pub
+	ln -sf $(DOTFILES).ssh/config ${HOME}/.ssh/config
+
+${HOME}/.ssh/id_rsa.pub : ssh-agent
+	@echo "must generate an ssh keypair"
+	@echo "see https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/"
+
+${HOME}/.config/systemd/ssh-agent.service : ${HOME}/.config/systemd/user
+		test -L ${HOME}/.config/systemd/user/ssh-agent.service || ln -sf $(DOTFILES).config/systemd/user/ssh-agent.service ${HOME}/.config/systemd/user/ssh-agent.service
+		systemctl --user enable ssh-agent.service
+		systemctl --user start ssh-agent.service
+
+ssh-agent : zsh
+ifeq ($(OS),Linux)
+	$(MAKE) ${HOME}/.config/systemd/ssh-agent.service
+endif
+ifeq ($(OS),Darwin)
+	@echo "no config for OS X yet"
+endif
+
+${HOME}/.config/systemd/user :
+	mkdir -p ${HOME}/.config/systemd/user
+
+clean-ssh :
+	systemctl --user stop ssh-agent.service
+	systemctl --user disable ssh-agent.service
+	rm -rf ${HOME}/.config/systemd/user/ssh-agent.service ${HOME}/.ssh/config
 
 
 #----- tmux -----#
@@ -63,4 +95,4 @@ clean-zsh :
 $(CURL) : 
 	sudo apt install curl
 
-.PHONY: clean clean-git clean-tmux clean-vim clean-zsh
+.PHONY: clean clean-git clean-ssh clean-tmux clean-vim clean-zsh
