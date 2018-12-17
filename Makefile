@@ -7,6 +7,7 @@ all : git vim zsh
 clean : clean-git clean-vim clean-zsh
 
 git : ${HOME}/.gitconfig
+tmux : ${HOME}/.tmux.conf
 vim : ${HOME}/.vimrc ${HOME}/.vim/ftplugin ${HOME}/.vim/bundle/Vundle.vim
 zsh : ${HOME}/.zshrc
 
@@ -18,6 +19,13 @@ ${HOME}/.gitconfig :
 clean-git :
 	rm -rf ${HOME}/.gitconfig
 
+
+#----- tmux -----#
+${HOME}/.tmux.conf :
+	ln -sf $(DOTFILES).tmux.conf ${HOME}/.tmux.conf
+
+clean-tmux:
+	rm -f ${HOME}/.tmux.conf
 
 #----- vim -----#
 ${HOME}/.vimrc :
@@ -55,4 +63,4 @@ clean-zsh :
 $(CURL) : 
 	sudo apt install curl
 
-.PHONY: clean clean-git clean-vim clean-zsh
+.PHONY: clean clean-git clean-tmux clean-vim clean-zsh
