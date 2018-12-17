@@ -29,6 +29,9 @@ export PATH=/usr/local/bin:$PATH
 
 export PATH=$HOME/bin:$PATH
 
+# gcloud
+export PATH=$PATH:$HOME/google-cloud-sdk/bin
+
 # text editor
 export EDITOR=vim
 export SYSTEMD_EDITOR=vim
