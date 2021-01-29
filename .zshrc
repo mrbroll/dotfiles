@@ -24,8 +24,14 @@ source $ZSH/oh-my-zsh.sh
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$GOBIN:$PATH
+export GOCACHE=$HOME/.cache/go
+
+# rust
+export PATH=$PATH:$HOME/.cargo/bin
+source $HOME/.cargo/env
 
 export PATH=/usr/local/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin
 
 export PATH=$HOME/bin:$PATH
 
@@ -37,10 +43,14 @@ export EDITOR=vim
 export SYSTEMD_EDITOR=vim
 
 # ALIAS
+alias ag="ag --hidden"
 alias bzl="bazel"
 alias dc="docker-compose"
-alias spotify="spotify --force-device-scale-factor=1.5"
+alias gc="gcloud"
+alias gca="gcloud alpha"
+alias gcb="gcloud beta"
 alias tf="terraform"
+alias tm="tmux"
 alias g="git"
 if [ ! -z "$(command -v xclip)" ]; then
     alias xc="xclip"
@@ -51,9 +61,6 @@ alias vbmanage="VBoxManage"
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 export KEYTIMEOUT=1
-
-#SSH
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 if [ ! -z "$(command -v "direnv")" ]; then
     #direnv hook, cuz it's dope
@@ -75,3 +82,17 @@ aws-logout() {
         unset "$v"
     done
 }
+
+dkrcln() {
+    docker ps -aq --filter="status=exited" | xargs docker rm 2>/dev/null
+    docker images --format '{{json .}}' | jq -r 'select(.Digest == "none") | .ID' | xargs docker rmi 2>/dev/null
+    docker volume ls -q --filter="dangling=true" | xargs docker volume rm 2>/dev/null
+}
+
+# mcfly
+if [[ -r $GOPATH/src/github.com/cantino/mcfly/mcfly.zsh ]]; then
+      source $GOPATH/src/github.com/cantino/mcfly/mcfly.zsh
+fi
+export MCFLY_KEY_SCHEME=vim
+
+source $HOME/.workrc

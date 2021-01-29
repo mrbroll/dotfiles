@@ -1,3 +1,6 @@
+" Some work tools set PYTHONPATH. Ignore that shit.
+let $PYTHONPATH = ''
+
 set nocompatible
 set shell=zsh
 
@@ -34,7 +37,6 @@ Plugin 'mattn/webapi-vim'
 Plugin 'tyru/open-browser.vim'
 Plugin 'vim-scripts/DrawIt'
 Plugin 'hashivim/vim-hashicorp-tools'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'pantsbuild/vim-pants'
 Plugin 'jparise/vim-graphql'
 Plugin 'vim-ruby/vim-ruby'
@@ -42,6 +44,7 @@ Plugin 'google/vim-maktaba'
 Plugin 'bazelbuild/vim-bazel'
 Plugin 'bazelbuild/vim-ft-bzl'
 Plugin 'google/vim-jsonnet'
+Plugin 'editorconfig/editorconfig-vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -53,7 +56,7 @@ colorscheme candy
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " ignore these files
-let NERDTreeIgnore = ['\.pyc$', 'bazel-.*']
+let NERDTreeIgnore = ['\.pyc$', 'bazel-bin', 'bazel-genfiles', 'bazel-out', 'bazel-testlogs']
 
 "emmet
 let g:user_emmet_settings = { 'liquid': { 'extends': 'html', }, }
@@ -94,6 +97,12 @@ let g:syntastic_auto_loc_list = 1
 "let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 
+"tmp until bazel checker is ready
+let g:syntastic_java_checkers = []
+
+"let shellcheck allow sourcing without specifying as file inputs
+let g:syntastic_sh_shellcheck_args = "-x"
+
 "use a .lvimrc without asking
 let g:localvimrc_sandbox=0
 let g:localvimrc_ask=0
@@ -103,11 +112,13 @@ let g:localvimrc_name=['.lvimrc']
 let g:terraform_fmt_on_save=1
 
 "youcompleteme
-let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_server_python_interpreter='/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_insertion=1
 
 "scala
-let g:syntastic_mode_map = { "mode": "active", "active_filetypes": [], "passive_filetypes": ["scala"]}
+"let g:syntastic_mode_map = { "mode": "active", "active_filetypes": [], "passive_filetypes": ["zsh"]}
 
 "jsonnet
 let g:jsonnet_fmt_on_save = 0
+
+autocmd BufNewFile,BufRead *.yml.tpl set syntax=yaml
