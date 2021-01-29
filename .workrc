@@ -1,0 +1,118 @@
+export VAULT_ADDR="https://vault.secure.car:8200"
+export CIRCLE_TOKEN=6fa0a4ab49f63d222926354c3a035f7c76d6aee8
+export GOPRIVATE=github.robot.car/cruise
+
+cruise-ssh() {
+    OKTA_USER=michael.broll
+    export VAULT_ADDR="${VAULT_ADDR:-https://vault.secure.car:8200/}"
+    SSH_DIR=$HOME/.ssh
+    KEY=$SSH_DIR/id_rsa
+    #ssh certs expire every 20 hours
+    MAX_AGE_MIN=$((20 * 60))
+    if [[ -z "$(find $KEY-cert.pub -mmin -$MAX_AGE_MIN 2>/dev/null)" || ! -s $KEY-cert.pub ]]; then
+        vault token lookup 2> /dev/null
+        if [[ $? -ne 0 ]]; then
+            echo "No valid vault tokens, attempting vault login"
+            until vault login -method=okta username=${OKTA_USER}
+            do
+                echo "Vault login failed, try again"
+                sleep 1
+            done 
+        fi
+        vault write -field=signed_key bsi-ssh-ca/sign/circleci public_key=@${KEY}.pub > ${KEY}-cert.pub;
+        vault write -field=signed_key bsi-ssh-ca/sign/ghe public_key=@${KEY}.pub > ${KEY}-cert-ghe.pub;
+        # re-authorize your SSH key every time you re-sign it (only required if using ssh-add with a time limit).
+        ssh-add -t $((MAX_AGE_MIN * 60)) $KEY
+    fi
+    command ssh $@
+}
+
+signkey() {
+    if [[ -z "$1" ]]; then
+        echo "you must supply the name of your public key..."
+    else
+        OKTA_USER=michael.broll
+        export VAULT_ADDR="${VAULT_ADDR:-https://vault.secure.car:8200/}"
+        export KEY="${HOME}/.ssh/$1"
+        #ssh certs expire every 20 hours
+        MAX_AGE_MIN=$((20 * 60))
+        if [[ -z "$(find $KEY-cert.pub -mmin -$MAX_AGE_MIN 2>/dev/null)" || ! -s $KEY-cert.pub ]]; then
+            vault token lookup 2> /dev/null
+            if [[ $? -ne 0 ]]; then
+                echo "No valid vault tokens, attempting vault login"
+                until vault login -method=okta username=${OKTA_USER}
+                do
+                    echo "Vault login failed, try again"
+                    sleep 1
+                done 
+            fi
+            vault write -field=signed_key bsi-ssh-ca/sign/circleci public_key=@${KEY}.pub > ${KEY}-cert.pub;
+            vault write -field=signed_key bsi-ssh-ca/sign/ghe public_key=@${KEY}.pub > ${KEY}-cert-ghe.pub;
+            # re-authorize your SSH key every time you re-sign it (only required if using ssh-add with a time limit).
+            ssh-add -t $((MAX_AGE_MIN * 60)) $KEY
+        fi
+    fi
+} 
+
+ssh-circleci() {
+    ssh ubuntu@circleci-service.robot.car
+}
+
+paasctx() {
+    env=$1
+    namespace=${2:-bazel}
+    region=${3:-us-west1}
+    cluster="paas-$(echo "$env" | tr '[:upper:]' '[:lower:]')-${region}"
+    active_account="$(gcloud auth list --format=json | jq -r '.[] | select(.status == "ACTIVE") | .account')"
+    if [ "$active_account" = "" ]; then
+        gcloud auth login
+    fi
+    project_id=$(gcloud projects list --format=json | jq -r ".[] | select(.name == \"PaaS ${env}\") | .projectId")
+    if [[ -z project_id ]]; then
+        echo "no PaaS project found for env: ${env}"
+        return
+    fi
+    gcloud config set project "$project_id"
+    gcloud container clusters get-credentials "$cluster" --region="$region"
+    kubens "$namespace"
+    kubectx "gke_${project_id}_${region}_${cluster}"
+}
+
+sfo3() {
+    export KUBECONFIG=$HOME/.kube/config.d/cache-sfo3
+}
+
+ci-tools() {
+    cd $GOPATH/src/go.robot.car/cruise/ci-tools
+    paasctx prod
+    kubens bazel
+    export CIRCLECI_PROD_TOKEN=$(kubectl get secret circleci-metrics -o json | jq -r '.data.CIRCLECI_TOKEN' | base64 --decode)
+}
+
+rbe() {
+    gcloud config set project cruise-bazel-rbe
+    cmd="$1"
+    if [[ -z "$cmd" ]]; then
+        echo "must provide a command"
+        echo "valid commands are: status, scale"
+        return 1
+    fi
+    case "$cmd" in
+    "status")
+        gcloud alpha remote-build-execution worker-pools list --instance=default_instance
+        ;;
+    "scale")
+        pool="$2"
+        size="$3"
+        if [[ -z "$pool" ]] || [[ -z "$size" ]]; then
+            echo "must provide arguments for pool and size"
+            return 1
+        fi
+        gcloud alpha remote-build-execution worker-pools update "$pool" --instance=default_instance --worker-count="$size"
+        ;;
+    *)
+        echo "unrecognized command: $cmd"
+        return 1
+        ;;
+    esac
+}
