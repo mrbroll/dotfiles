@@ -26,10 +26,6 @@ export GOBIN=$GOPATH/bin
 export PATH=$GOBIN:$PATH
 export GOCACHE=$HOME/.cache/go
 
-# rust
-export PATH=$PATH:$HOME/.cargo/bin
-source $HOME/.cargo/env
-
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 
@@ -94,5 +90,3 @@ if [[ -r $GOPATH/src/github.com/cantino/mcfly/mcfly.zsh ]]; then
       source $GOPATH/src/github.com/cantino/mcfly/mcfly.zsh
 fi
 export MCFLY_KEY_SCHEME=vim
-
-source $HOME/.workrc
